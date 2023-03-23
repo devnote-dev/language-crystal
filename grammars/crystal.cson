@@ -9,53 +9,63 @@ patterns: [
   {
     captures:
       1:
-        name: 'keyword.control.abstract.crystal'
+        name: 'keyword.control.private.crystal'
       2:
-        name: 'keyword.control.class.crystal'
+        name: 'keyword.control.abstract.crystal'
       3:
-        name: 'entity.name.type.class.crystal'
+        name: 'keyword.control.class.crystal'
       4:
-        name: 'punctuation.section.function.crystal'
+        name: 'entity.name.type.class.crystal'
       5:
         name: 'entity.name.type.generic.crystal'
       6:
-        name: 'punctuation.section.function.crystal'
+        name: 'punctuation.separator.inheritance.crystal'
       7:
-        name: 'punctuation.separator.inheritance.crystal'
-      8:
         name: 'entity.other.inherited-class.crystal'
-    match: '^\\s*(?:(abstract)\\s+)?(class|struct|def)\\s+([.\\w\\d_:]+)(?:(\\()([.\\w\\d_:]+)(\\)))?(?:\\s+(<)\\s+([.\\w\\d_:]+))?'
+      8:
+        name: 'entity.name.type.generic.crystal'
+    match: '^\\s*(?:(private)\\s+)?(?:(abstract)\\s+)?(class)\\s+([\\w:]+)(\\([\\w\\s:,]+\\))?(?:\\s+<\\s+([\\w\\s:,]+)(\\([\\w\\s:,]+\\))?)?' 
     name: 'meta.class.crystal'
   }
   {
     captures:
       1:
-        name: 'keyword.control.struct.crystal'
+        name: 'keyword.control.private.crystal'
       2:
-        name: 'entity.name.type.struct.crystal'
+        name: 'keyword.control.abstract.crystal'
       3:
-        name: 'punctuation.separator.inheritance.crystal'
+        name: 'keyword.control.struct.crystal'
       4:
+        name: 'entity.name.type.struct.crystal'
+      5:
+        name: 'punctuation.separator.inheritance.crystal'
+      6:
         name: 'entity.other.inherited-struct.crystal'
-    match: '^\\s*(struct)\\s+(?:([.\\w\\d_:]+)(?:\\s+(<)\\s+([.\\w\\d_:]+))?)'
-    name: 'meta.class.crystal'
+    match: '^\\s*(?:(private)\\s+)?(?:(abstract)\\s+)?(struct)\\s+([\\w:]+)(?:\\s+<\\s+([\\w\\s:,]+))?'
+    name: 'meta.struct.crystal'
   }
   {
     captures:
       1:
-        name: 'keyword.control.module.crystal'
+        name: 'keyword.control.private.crystal'
       2:
+        name: 'keyword.control.module.crystal'
+      3:
         name: 'entity.name.type.module.crystal'
-    match: '^\\s*(module)\\s+([.\\w\\d_:]+)'
+      4:
+        name: 'entity.name.type.generic.crystal'
+    match: '^\\s*(?:(private)\\s+)?(module)\\s+([\\w:]+)(\\([\\w\\s:,]+\\))?'
     name: 'meta.module.crystal'
   }
   {
     captures:
       1:
-        name: 'keyword.control.enum.crystal'
+        name: 'keyword.control.private.crystal'
       2:
+        name: 'keyword.control.enum.crystal'
+      3:
         name: 'entity.name.type.enum.crystal'
-    match: '^\\s*(enum)\\s+([.\\w\\d_:]+)'
+    match: '^\\s*(?:(private)\\s+)?enum\\s+([\\w:]+)'
     name: 'meta.enum.crystal'
   }
   {
@@ -64,7 +74,7 @@ patterns: [
         name: 'keyword.control.lib.crystal'
       2:
         name: 'entity.name.type.lib.crystal'
-    match: '^\\s*(lib)\\s+([.\\w\\d_]+)'
+    match: '^\\s*(lib)\\s+([\\w:]+)'
     name: 'meta.lib.crystal'
   }
   {
@@ -73,7 +83,7 @@ patterns: [
         name: 'keyword.control.annotation.crystal'
       2:
         name: 'entity.name.type.annotation.crystal'
-    match: '^\\s*(annotation)\\s+([.\\w\\d_]+)'
+    match: '^\\s*(annotation)\\s+([\\w:]+)'
     name: 'meta.annotation.crystal'
   }
   {
@@ -94,7 +104,7 @@ patterns: [
   }
   {
     comment: 'everything being a reserved word, not a value and needing a \'end\' is a..'
-    match: '(?<!\\.)\\b(BEGIN|begin|case|class|else|elsif|END|end|ensure|forall|for|if|ifdef|in|module|rescue|struct|then|unless|until|when|while|annotation)\\b(?![?!])'
+    match: '(?<!\\.)\\b(annotation|asm|begin|case|class|else|elsif|end|enum|ensure|forall|for|if|in|module|out|rescue|select|struct|then|unless|until|when|while|with)\\b(?![?!])'
     name: 'keyword.control.crystal'
   }
   {
@@ -108,13 +118,8 @@ patterns: [
     name: 'meta.syntax.crystal.start-block'
   }
   {
-    comment: ' as above, just doesn\'t need a \'end\' and does a logic operation'
-    match: '(?<!\\.)\\b(and|not|or)\\b'
-    name: 'keyword.operator.logical.crystal'
-  }
-  {
     comment: ' just as above but being not a logical operation'
-    match: '(?<!\\.)\\b(alias|alias_method|break|next|redo|retry|return|super|type|undef|yield|out|pointerof|typeof)\\b(?![?!])|\\bdefined\\?|\\bblock_given\\?'
+    match: '(?<!\\.)\\b(alias|break|instance_sizeof|next|offsetof|return|super|type|yield|out|pointerof|sizeof|typeof)\\b(?![?!])'
     name: 'keyword.control.pseudo-method.crystal'
   }
   {
@@ -131,10 +136,10 @@ patterns: [
   }
   {
     match: '\\bself\\b(?![?!])'
-    name: 'variable.language.self.crystal'
+    name: 'keyword.other.special-method.crystal'
   }
   {
-    match: '((?<=\\s)|(?<=^))\\b(initialize|new|loop|include|extend|prepend|raise|fail|getter(?:[?])?|setter(?:[?])?|property(?:[?])?|catch|throw)\\b\\w?((?=\\s)|(?=$))'
+    match: '((?<=\\s)|(?<=^))\\b(extend|include|initialize|loop|new|raise)\\b\\w?((?=\\s)|(?=$))'
     name: 'keyword.other.special-method.crystal'
   }
   {
@@ -195,12 +200,12 @@ patterns: [
     match: '\\b[A-Z]\\w*(?=((\\.|::)[A-Za-z]|\\[))'
     name: 'support.class.crystal'
   }
+  # {
+  #   match: '\\b(Nil|Int|Int8|Int16|Int32|Int64|UInt8|UInt16|UInt32|UInt64|Float32|Float64|Set|Slice|Float|Number|StaticArray|Symbol|BigFloat|BigInt|BigRational|BitArray|Bool|Char|Atomic|Complex|Time|String|Tuple|NamedTuple|Proc|Union|Pointer|Range)\\b\\w?'
+  #   name: 'support.struct.crystal'
+  # }
   {
-    match: '\\b(Nil|Int|Int8|Int16|Int32|Int64|UInt8|UInt16|UInt32|UInt64|Float32|Float64|Set|Slice|Float|Number|StaticArray|Symbol|BigFloat|BigInt|BigRational|BitArray|Bool|Char|Atomic|Complex|Time|String|Tuple|NamedTuple|Proc|Union|Pointer|Range)\\b\\w?'
-    name: 'support.struct.crystal'
-  }
-  {
-    match: '((?<=\\s)|(?<=^))\\b(abort|at_exit|autoload\\??|binding|callcc|caller|caller_locations|chomp|chop|eval|exec|exit|exit!|fork|format|gets|global_variables|gsub|iterator\\?|lambda|load|local_variables|open|p|print|printf|proc|putc|puts|rand|readline|readlines|select|set_trace_func|sleep|spawn|sprintf|srand|sub|syscall|system|test|trace_var|trap|untrace_var|warn)\\b\\w?((?=\\s)|(?=$))'
+    match: '((?<=\\s)|(?<=^))\\b(abort|at_exit|caller|exit|gets|p|print|printf|puts|rand|sleep|spawn|sprintf|system)\\b\\w?((?=\\s)|(?=$))'
     name: 'support.function.kernel.crystal'
   }
   {
@@ -208,122 +213,157 @@ patterns: [
     name: 'variable.other.constant.crystal'
   }
   {
-    begin: '\\b(?:(private|protected)\\s+)?(def|macro)\\s+(\\S+)\\s*(\\()'
-    beginCaptures:
+    captures:
       1:
-        name: 'keyword.control.visibility.crystal'
+        name: 'keyword.control.private.crystal'
       2:
-        name: 'keyword.control.def.crystal'
+        name: 'keyword.control.macro.crystal'
       3:
-        name: 'entity.name.function.crystal'
-      4:
-        name: 'punctuation.definition.parameters.crystal'
-    comment: 'The method pattern comes from the symbol pattern. See there for an explanation.'
-    end: '\\)'
-    endCaptures:
-      0:
-        name: 'punctuation.definition.parameters.crystal'
-    name: 'meta.function.method.with-arguments.crystal'
-    patterns: [
-      {
-        begin: '(?![\\s,)])'
-        end: '(?=[,)])'
-        patterns: [
-          {
-            captures:
-              1:
-                name: 'storage.type.variable.crystal'
-              2:
-                name: 'variable.parameter.function.crystal'
-            match: '\\G([&*]?)([_a-zA-Z][_a-zA-Z0-9]*)'
-          }
-          {
-            include: '$self'
-          }
-        ]
-      }
-    ]
-  }
-  {
-    begin: '\\b(fun)\\s+(\\S+)(?:\\s+(=)\\s+(\\S+))?\\s*(\\()'
-    beginCaptures:
-      1:
-        name: 'keyword.control.function.crystal'
-      2:
-        name: 'entity.name.function.crystal'
-      4:
-        name: 'entity.name.function.crystal'
-      5:
-        name: 'punctuation.definition.parameters.crystal'
-    comment: 'The method pattern comes from the symbol pattern. See there for an explanation.'
-    end: '\\)'
-    endCaptures:
-      0:
-        name: 'punctuation.definition.parameters.crystal'
-    name: 'meta.function.method.with-arguments.crystal'
-    patterns: [
-      {
-        begin: '(?![\\s,)])'
-        end: '(?=[,)])'
-        patterns: [
-          {
-            captures:
-              1:
-                name: 'storage.type.variable.crystal'
-              2:
-                name: 'variable.parameter.function.crystal'
-            match: '\\G([&*]?)([_a-zA-Z][_a-zA-Z0-9]*)'
-          }
-          {
-            include: '$self'
-          }
-        ]
-      }
-    ]
-  }
-  {
-    begin: '\\b(?:(private|protected)\\s+)?(def|macro)\\s+(\\S+)'
-    beginCaptures:
-      1:
-        name: 'keyword.control.visibility.crystal'
-      2:
-        name: 'keyword.control.def.crystal'
-      3:
-        name: 'entity.name.function.crystal'
-    comment: 'same as the previous rule, but without parentheses around the arguments'
-    end: '$'
-    name: 'meta.function.method.with-arguments.crystal'
-    patterns: [
-      {
-        begin: '(?![\\s,])'
-        end: '(?=,|$)'
-        patterns: [
-          {
-            captures:
-              1:
-                name: 'punctuation.definition.variable.crystal'
-            match: '\\G([&*]?)[_a-zA-Z][_a-zA-Z0-9]*'
-            name: 'variable.parameter.function.crystal'
-          }
-          {
-            include: '$self'
-          }
-        ]
-      }
-    ]
+        name: 'entity.name.type.function.crystal'
+    match: '^\\s*(?:(private)\\s+)?(macro)\\s+(\\w+)'
+    name: 'meta.macro.crystal'
   }
   {
     captures:
       1:
         name: 'keyword.control.visibility.crystal'
       2:
-        name: 'keyword.control.def.crystal'
+        name: 'keyword.control.abstract.crystal'
       3:
-        name: 'entity.name.function.crystal'
-    comment: ' the optional name is just to catch the def also without a method-name'
-    match: '\\b(?:(private|protected)\\s+)?(def|macro)\\s+(\\S+)'
-    name: 'meta.function.method.without-arguments.crystal'
+        name: 'keyword.control.def.crystal'
+      4:
+        name: 'entity.name.type.function.crystal'
+    match: '^\\s*(?:(private|protected)\\s+)?(?:(abstract)\\s+)?(def)\\s+(\\w+)'
+    name: 'meta.function.crystal'
   }
+  # {
+  #   begin: '\\b(?:(private|protected)\\s+)?(def|macro)\\s+(\\S+)\\s*(\\()'
+  #   beginCaptures:
+  #     1:
+  #       name: 'keyword.control.visibility.crystal'
+  #     2:
+  #       name: 'keyword.control.def.crystal'
+  #     3:
+  #       name: 'entity.name.function.crystal'
+  #     4:
+  #       name: 'punctuation.definition.parameters.crystal'
+  #   comment: 'The method pattern comes from the symbol pattern. See there for an explanation.'
+  #   end: '\\)'
+  #   endCaptures:
+  #     0:
+  #       name: 'punctuation.definition.parameters.crystal'
+  #   name: 'meta.function.method.with-arguments.crystal'
+  #   patterns: [
+  #     {
+  #       begin: '(?![\\s,)])'
+  #       end: '(?=[,)])'
+  #       patterns: [
+  #         {
+  #           captures:
+  #             1:
+  #               name: 'storage.type.variable.crystal'
+  #             2:
+  #               name: 'variable.parameter.function.crystal'
+  #           match: '\\G([&*]?)([_a-zA-Z][_a-zA-Z0-9]*)'
+  #         }
+  #         {
+  #           include: '$self'
+  #         }
+  #       ]
+  #     }
+  #   ]
+  # }
+  {
+    captures:
+      1:
+        name: 'keyword.control.fun.crystal'
+      2:
+        name: 'entity.name.type.alias.crystal'
+      3:
+        name: 'entity.name.type.function.crystal'
+    match: '^\\s*(fun)\\s+(\\w+)(?:[\\w\\s:(),]+)?\\s+(?:=\\s+(\\w+|".+")|:\\s\\w+)'
+    name: 'meta.external-function.crystal'
+  }
+  # {
+  #   begin: '\\b(fun)\\s+(\\S+)(?:\\s+(=)\\s+(\\S+))?\\s*(\\()'
+  #   beginCaptures:
+  #     1:
+  #       name: 'keyword.control.function.crystal'
+  #     2:
+  #       name: 'entity.name.function.crystal'
+  #     4:
+  #       name: 'entity.name.function.crystal'
+  #     5:
+  #       name: 'punctuation.definition.parameters.crystal'
+  #   comment: 'The method pattern comes from the symbol pattern. See there for an explanation.'
+  #   end: '\\)'
+  #   endCaptures:
+  #     0:
+  #       name: 'punctuation.definition.parameters.crystal'
+  #   name: 'meta.function.method.with-arguments.crystal'
+  #   patterns: [
+  #     {
+  #       begin: '(?![\\s,)])'
+  #       end: '(?=[,)])'
+  #       patterns: [
+  #         {
+  #           captures:
+  #             1:
+  #               name: 'storage.type.variable.crystal'
+  #             2:
+  #               name: 'variable.parameter.function.crystal'
+  #           match: '\\G([&*]?)([_a-zA-Z][_a-zA-Z0-9]*)'
+  #         }
+  #         {
+  #           include: '$self'
+  #         }
+  #       ]
+  #     }
+  #   ]
+  # }
+  # {
+  #   begin: '\\b(?:(private|protected)\\s+)?(def|macro)\\s+(\\S+)'
+  #   beginCaptures:
+  #     1:
+  #       name: 'keyword.control.visibility.crystal'
+  #     2:
+  #       name: 'keyword.control.def.crystal'
+  #     3:
+  #       name: 'entity.name.function.crystal'
+  #   comment: 'same as the previous rule, but without parentheses around the arguments'
+  #   end: '$'
+  #   name: 'meta.function.method.with-arguments.crystal'
+  #   patterns: [
+  #     {
+  #       begin: '(?![\\s,])'
+  #       end: '(?=,|$)'
+  #       patterns: [
+  #         {
+  #           captures:
+  #             1:
+  #               name: 'punctuation.definition.variable.crystal'
+  #           match: '\\G([&*]?)[_a-zA-Z][_a-zA-Z0-9]*'
+  #           name: 'variable.parameter.function.crystal'
+  #         }
+  #         {
+  #           include: '$self'
+  #         }
+  #       ]
+  #     }
+  #   ]
+  # }
+  # {
+  #   captures:
+  #     1:
+  #       name: 'keyword.control.visibility.crystal'
+  #     2:
+  #       name: 'keyword.control.def.crystal'
+  #     3:
+  #       name: 'entity.name.function.crystal'
+  #   comment: ' the optional name is just to catch the def also without a method-name'
+  #   match: '\\b(?:(private|protected)\\s+)?(def|macro)\\s+(\\S+)'
+  #   name: 'meta.function.method.without-arguments.crystal'
+  # }
   {
     match: '0x[A-Fa-f0-9]+'
     name: 'constant.numeric.hexadecimal.crystal'
@@ -343,12 +383,12 @@ patterns: [
   }
   {
     comment: 'match the unsigned-int type as per language spec'
-    match: '((?<=\\d_)|(?<=\\d))(u(8|16|32|64))(?!\\w)'
+    match: '((?<=\\d_)|(?<=\\d))(u(8|16|32|64|128))(?!\\w)'
     name: 'entity.name.type.unsigned-int.crystal'
   }
   {
     comment: 'match the signed-int type as per language spec'
-    match: '((?<=\\d_)|(?<=\\d))(i(8|16|32|64))(?!\\w)'
+    match: '((?<=\\d_)|(?<=\\d))(i(8|16|32|64|128))(?!\\w)'
     name: 'entity.name.type.signed-int.crystal'
   }
   {
@@ -361,7 +401,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.symbol.begin.crystal'
-    comment: "symbol literal with '' delimitor"
+    comment: "symbol literal with '' delimiter"
     end: '\''
     endCaptures:
       0:
@@ -379,7 +419,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.symbol.begin.crystal'
-    comment: 'symbol literal with "" delimitor'
+    comment: 'symbol literal with "" delimiter'
     end: '"'
     endCaptures:
       0:
@@ -588,7 +628,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.regexp.begin.crystal'
-    comment: 'regular expression literal with interpolation and {} delimitor'
+    comment: 'regular expression literal with interpolation and {} delimiter'
     end: '\\}[eimnosux]*'
     endCaptures:
       0:
@@ -608,7 +648,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.regexp.begin.crystal'
-    comment: 'regular expression literal with interpolation and [] delimitor'
+    comment: 'regular expression literal with interpolation and [] delimiter'
     end: '\\][eimnosux]*'
     endCaptures:
       0:
@@ -628,7 +668,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.regexp.begin.crystal'
-    comment: 'regular expression literal with interpolation and () delimitor'
+    comment: 'regular expression literal with interpolation and () delimiter'
     end: '\\)[eimnosux]*'
     endCaptures:
       0:
@@ -648,7 +688,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.regexp.begin.crystal'
-    comment: 'regular expression literal with interpolation and <> delimitor'
+    comment: 'regular expression literal with interpolation and <> delimiter'
     end: '\\>[eimnosux]*'
     endCaptures:
       0:
@@ -668,7 +708,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.regexp.begin.crystal'
-    comment: 'regular expression literal with interpolation and {} delimitor'
+    comment: 'regular expression literal with interpolation and {} delimiter'
     end: '\\1[eimnosux]*'
     endCaptures:
       0:
@@ -685,7 +725,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of symbols literal with interpolation and [] delimitor'
+    comment: 'array of symbols literal with interpolation and [] delimiter'
     end: '\\]'
     endCaptures:
       0:
@@ -708,7 +748,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of symbols literal with interpolation and () delimitor'
+    comment: 'array of symbols literal with interpolation and () delimiter'
     end: '\\)'
     endCaptures:
       0:
@@ -731,7 +771,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of symbols literal with interpolation and <> delimitor'
+    comment: 'array of symbols literal with interpolation and <> delimiter'
     end: '\\>'
     endCaptures:
       0:
@@ -754,7 +794,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of symbols literal with interpolation and {} delimitor'
+    comment: 'array of symbols literal with interpolation and {} delimiter'
     end: '\\}'
     endCaptures:
       0:
@@ -777,7 +817,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of symbols literal with interpolation and wildcard delimitor'
+    comment: 'array of symbols literal with interpolation and wildcard delimiter'
     end: '\\1'
     endCaptures:
       0:
@@ -797,7 +837,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of symbols literal with [] delimitor'
+    comment: 'array of symbols literal with [] delimiter'
     end: '\\]'
     endCaptures:
       0:
@@ -818,7 +858,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of symbols literal with () delimitor'
+    comment: 'array of symbols literal with () delimiter'
     end: '\\)'
     endCaptures:
       0:
@@ -839,7 +879,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of symbols literal with <> delimitor'
+    comment: 'array of symbols literal with <> delimiter'
     end: '\\>'
     endCaptures:
       0:
@@ -860,7 +900,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of symbols literal with {} delimitor'
+    comment: 'array of symbols literal with {} delimiter'
     end: '\\}'
     endCaptures:
       0:
@@ -881,7 +921,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of symbols literal with wildcard delimitor'
+    comment: 'array of symbols literal with wildcard delimiter'
     end: '\\1'
     endCaptures:
       0:
@@ -899,7 +939,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of strings literal with interpolation and [] delimitor'
+    comment: 'array of strings literal with interpolation and [] delimiter'
     end: '\\]'
     endCaptures:
       0:
@@ -922,7 +962,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of strings literal with interpolation and () delimitor'
+    comment: 'array of strings literal with interpolation and () delimiter'
     end: '\\)'
     endCaptures:
       0:
@@ -945,7 +985,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of strings literal with interpolation and <> delimitor'
+    comment: 'array of strings literal with interpolation and <> delimiter'
     end: '\\>'
     endCaptures:
       0:
@@ -968,7 +1008,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of strings literal with interpolation and {} delimitor'
+    comment: 'array of strings literal with interpolation and {} delimiter'
     end: '\\}'
     endCaptures:
       0:
@@ -991,7 +1031,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of strings literal with interpolation and wildcard delimitor'
+    comment: 'array of strings literal with interpolation and wildcard delimiter'
     end: '\\1'
     endCaptures:
       0:
@@ -1011,7 +1051,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of strings literal with [] delimitor'
+    comment: 'array of strings literal with [] delimiter'
     end: '\\]'
     endCaptures:
       0:
@@ -1032,7 +1072,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of strings literal with () delimitor'
+    comment: 'array of strings literal with () delimiter'
     end: '\\)'
     endCaptures:
       0:
@@ -1053,7 +1093,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of strings literal with <> delimitor'
+    comment: 'array of strings literal with <> delimiter'
     end: '\\>'
     endCaptures:
       0:
@@ -1074,7 +1114,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of strings literal with {} delimitor'
+    comment: 'array of strings literal with {} delimiter'
     end: '\\}'
     endCaptures:
       0:
@@ -1095,7 +1135,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.section.array.begin.crystal'
-    comment: 'array of strings literal with wildcard delimitor'
+    comment: 'array of strings literal with wildcard delimiter'
     end: '\\1'
     endCaptures:
       0:
@@ -1113,7 +1153,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.string.begin.crystal'
-    comment: 'string literal with interpolation and () delimitor'
+    comment: 'string literal with interpolation and () delimiter'
     end: '\\)'
     endCaptures:
       0:
@@ -1136,7 +1176,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.string.begin.crystal'
-    comment: 'string literal with interpolation and [] delimitor'
+    comment: 'string literal with interpolation and [] delimiter'
     end: '\\]'
     endCaptures:
       0:
@@ -1159,7 +1199,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.string.begin.crystal'
-    comment: 'string literal with interpolation and <> delimitor'
+    comment: 'string literal with interpolation and <> delimiter'
     end: '\\>'
     endCaptures:
       0:
@@ -1182,7 +1222,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.string.begin.crystal'
-    comment: 'string literal with interpolation and {} delimitor'
+    comment: 'string literal with interpolation and {} delimiter'
     end: '\\}'
     endCaptures:
       0:
@@ -1205,7 +1245,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.string.begin.crystal'
-    comment: 'string literal with interpolation and wildcard delimitor'
+    comment: 'string literal with interpolation and wildcard delimiter'
     end: '\\1'
     endCaptures:
       0:
@@ -1313,7 +1353,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.string.begin.crystal'
-    comment: 'string literal with () delimitor'
+    comment: 'string literal with () delimiter'
     end: '\\)'
     endCaptures:
       0:
@@ -1334,7 +1374,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.string.begin.crystal'
-    comment: 'string literal with <> delimitor'
+    comment: 'string literal with <> delimiter'
     end: '\\>'
     endCaptures:
       0:
@@ -1355,7 +1395,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.string.begin.crystal'
-    comment: 'string literal with [] delimitor'
+    comment: 'string literal with [] delimiter'
     end: '\\]'
     endCaptures:
       0:
@@ -1376,7 +1416,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.string.begin.crystal'
-    comment: 'string literal with {} delimitor'
+    comment: 'string literal with {} delimiter'
     end: '\\}'
     endCaptures:
       0:
@@ -1397,7 +1437,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.string.begin.crystal'
-    comment: 'string literal with wildcard delimitor'
+    comment: 'string literal with wildcard delimiter'
     end: '\\1'
     endCaptures:
       0:
@@ -1415,7 +1455,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.symbol.begin.crystal'
-    comment: 'symbol literal with () delimitor'
+    comment: 'symbol literal with () delimiter'
     end: '\\)'
     endCaptures:
       0:
@@ -1436,7 +1476,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.symbol.begin.crystal'
-    comment: 'symbol literal with <> delimitor'
+    comment: 'symbol literal with <> delimiter'
     end: '\\>'
     endCaptures:
       0:
@@ -1457,7 +1497,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.symbol.begin.crystal'
-    comment: 'symbol literal with [] delimitor'
+    comment: 'symbol literal with [] delimiter'
     end: '\\]'
     endCaptures:
       0:
@@ -1478,7 +1518,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.symbol.begin.crystal'
-    comment: 'symbol literal with {} delimitor'
+    comment: 'symbol literal with {} delimiter'
     end: '\\}'
     endCaptures:
       0:
@@ -1499,7 +1539,7 @@ patterns: [
     beginCaptures:
       0:
         name: 'punctuation.definition.symbol.begin.crystal'
-    comment: 'symbol literal with wildcard delimitor'
+    comment: 'symbol literal with wildcard delimiter'
     end: '\\1'
     endCaptures:
       0:
@@ -1978,7 +2018,7 @@ patterns: [
     name: 'keyword.operator.comparison.crystal'
   }
   {
-    match: '(?<=[ \\t])!+|\\bnot\\b|&&|\\band\\b|\\|\\||\\bor\\b|\\^'
+    match: '(?<=[ \\t])!+|&&|\\|\\||\\^'
     name: 'keyword.operator.logical.crystal'
   }
   {
